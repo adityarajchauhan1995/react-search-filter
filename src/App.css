@@ -6,6 +6,9 @@
   height: 40vmin;
   pointer-events: none;
 }
+.search-param{
+  width: -webkit-fill-available;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

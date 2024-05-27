@@ -5,7 +5,8 @@ const FetchGetRequest = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [searchInput, setSearchinput] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
   const listItems = data.map((element) => {
     return (
         <ul type="disc" className="item">
@@ -41,9 +42,28 @@ const FetchGetRequest = () => {
     };
   
     fetchData();
-  }, []); //call api upon component loading
+  }, [searchInput]); //call api upon component loading
 
-  return <div className="container">{listItems}{console.log(data)}</div>;
+  const onChangeHandler = event => {
+    setSearchinput(event.target.value);
+    setFilteredData(data.filter(item => item.name.toLowerCase().includes(searchInput.toLowerCase())));
+ };
+
+ const onClickHandler = event =>{
+  setData(filteredData);
+ }
+
+ const onResetHandler = event =>{
+  setSearchinput('');
+ }
+
+  return (<div className="container">
+    <div className='filters'>
+      <input className='search-param' placeholder='Enter name of elixir to search' id='search-param' onChange={onChangeHandler}></input>
+      <button onClick={onClickHandler}>search</button>
+      <button onClick={onResetHandler}>resest</button>
+      </div>
+      {listItems}</div>);
 };
 
 export default FetchGetRequest;
